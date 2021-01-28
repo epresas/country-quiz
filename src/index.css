@@ -1,0 +1,39 @@
+/* @import './components/answers/answers.component.css';
+@import './components/quiz/quiz.component.css';
+@import './components/login/login.component.css'; */
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-Regular.ttf');
+  /* src: url('./assets/fonts/Poppins-Regular.ttf'); */
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-Bold.ttf');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-Medium.ttf');
+  font-weight: medium;
+}
+
+* {
+  box-sizing: border-box;
+  cursor: url('./assets/img/hand-pointer-svgrepo-com.svg'), auto;
+}
+
+body {
+  background-image: url('./assets/img/background.png');
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+html {
+}

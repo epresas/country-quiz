@@ -1,0 +1,102 @@
+.Quiz {
+  background-color: var(--color-white);
+  border-radius: 24px;
+  margin: 0 auto;
+  min-width: 300px;
+  padding: 50px 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.Wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: bold;
+  justify-content: flex-start;
+  min-width: 300px;
+  position: relative;
+}
+
+.Question {
+  color: var(--color-blue-dark-primary);
+  font-size: 20px;
+  line-height: 36px;
+  margin-bottom: 32px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical; 
+}
+
+header {
+  align-self: flex-start;
+}
+
+.Header {
+  color: var(--color-white);
+  font-size: 20px;
+  line-height: 36px;
+  text-transform: uppercase;
+}
+
+.Logo {
+  background: url('../../assets/img/undraw_adventure.svg') center no-repeat;
+  background-size: contain;
+  position: absolute;
+  width: 122px;
+  height: 116px;
+  right: 0;
+  top: 0px;
+  transform: translateY(-25%);
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .Quiz {
+    min-width: 364px;
+    max-width: 500px;
+  }
+
+  .Header {
+    font-size: 24px;
+    line-height: 40px;
+  }
+}
+
+.Footer {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  transform: translateY(24px);
+  width: 100%;
+}
+
+@media only screen and (min-width: 1024px) {
+  .Logo {
+    width: 162px;
+  }
+
+  .Header {
+    font-size: 36px;
+    line-height: 54px;
+  }
+
+  .Wrapper {
+    width: 464px;
+  }
+
+  .Question {
+    font-size: 24px;
+    line-height: 36px;
+    margin-bottom: 32px;
+  }
+
+  .Quiz {
+    padding: 68px 32px;
+    max-width: 500px;
+  }
+}

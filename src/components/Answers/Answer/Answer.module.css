@@ -1,17 +1,11 @@
 .Answer {
-  border: 2px solid var(--color-blue-light-primary);
   border-radius: 12px;
   font-family: Poppins;
   font-style: normal;
   font-weight: 500;
-  max-height: 56px;
+  height: auto;
   overflow: hidden;
   transition: all .15s ease-in-out;
-}
-
-.Answer:not(.Disabled):hover {
-  background-color: var(--color-orange-primary);
-  border-color: var(--color-orange-primary);
 }
 
 .Answer:not(:last-child) {
@@ -21,33 +15,47 @@
 .AnswerBtn {
   align-items: center;
   background-color: transparent;
-  border: none;
-  border-radius: 10px;
+  border: 2px solid var(--color-blue-light-primary);
+  border-radius: 12px;
   color: var(--color-blue-light-secondary);
   display: flex;
   height: 100%;
-  /* pointer-events: none; */
   transition: color .15s ease-in-out;
   width: 100%;
 }
 
-.AnswerBtn:not(.Disabled):hover {
+.AnswerBtn:active,
+.AnswerBtn:focus {
+  outline: none;
+}
+
+.AnswerBtn:hover {
+  background-color: var(--color-orange-primary);
+  border-color: var(--color-orange-primary);
   color: var(--color-white);
+  outline: none;
+
 }
 
 .Correct {
   background-color: var(--color-green-success);
+  border-color: var(--color-green-success);
   color: var(--color-white);
+  pointer-events: none;
 }
 
 .Incorrect {
   background-color: var(--color-red-error);
+  border-color: var(--color-red-error);
   color: var(--color-white);
+  pointer-events: none;
 }
 
 .Disabled {
   background-color: var(--color-grey-primary);
+  border-color: var(--color-grey-primary);
   color: var(--color-grey-secondary);
+  pointer-events: none;
 }
 
 .Label {

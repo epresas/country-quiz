@@ -15,7 +15,6 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  font-family: 'Poppins';
   font-style: normal;
   font-weight: bold;
   justify-content: flex-start;
@@ -92,11 +91,12 @@ header {
   .Question {
     font-size: 24px;
     line-height: 36px;
+    margin-top: 19px;
     margin-bottom: 32px;
   }
 
   .Quiz {
-    padding: 68px 32px;
+    padding: 49px 32px;
     max-width: 500px;
   }
 }

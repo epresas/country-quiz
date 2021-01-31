@@ -1,9 +1,9 @@
 import React from 'react';
 
-import classes from './Spinner.module.css';
+import styles from './Spinner.module.css';
 
 const Spinner = (props) => (
-<div className={classes.ldsRipple}>
+<div className={styles.ldsRipple}>
   <div></div>
   <div></div>
 </div>);

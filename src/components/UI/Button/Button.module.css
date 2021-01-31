@@ -10,7 +10,9 @@
   width: 116px;
 }
 
-.Button:hover {
+.Button:hover,
+.Button:active,
+.Button:focus {
   background-color: var(--color-white);
   color: var(--color-orange-primary);
 }

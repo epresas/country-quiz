@@ -1,0 +1,61 @@
+.FormGroup {
+  display: flex;
+  margin-bottom: 25px;
+  padding: 0 50px;
+  position: relative;
+}
+.FormInput {
+  border: 2px solid var(--color-blue-light-secondary);
+  border-radius: 10px;
+  flex: 1 0 auto;
+  line-height: 36px;
+  padding-left: 8px;
+}
+
+.FormInput.Error{
+  border-color: var(--color-red-error);
+}
+
+.FormInput.Valid{
+  border-color: var(--color-green-success);
+}
+
+.FormInput:focus {
+  outline:none;
+}
+
+.FormInput:focus + .FormLabel {
+  transform: translate(10px, -200%);
+}
+.FormLabel {
+  font-size: 12px;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(10px, -50%);
+  transition: all .12s linear;
+}
+.Footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Btn {
+  background-color: var(--color-blue-dark-primary);
+  border: 1px solid var(--color-blue-dark-primary);
+  border-radius: 10px;
+  color: var(--color-white);
+  font-size: 14px;
+  height: 36px;
+  letter-spacing: .4px;
+  min-width: 120px;
+  padding: 5px 10px;
+  transition: all .15s linear;
+}
+
+.Btn:hover {
+  background-color: var(--color-blue-light-secondary);
+  border: 1px solid var(--color-blue-light-secondary);
+}

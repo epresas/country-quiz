@@ -1,13 +1,13 @@
 import React from 'react'
 
-import classes from './Answers.module.css';
+import styles from './Answers.module.css';
 import Answer from './Answer/Answer';
 
 const Answers = (props) => {
   const answers = props.answers.answers;
   
   return (
-    <ul className={classes.Answers}>
+    <ul className={styles.Answers}>
       {answers.map(answer => (
         <Answer 
           key={answer.id} 

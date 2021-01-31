@@ -1,9 +1,10 @@
 import React, { useState, useEffect , useCallback } from 'react'
 
-import classes from './Quiz.module.css';
+import styles from './Quiz.module.css';
 import Answers from '../../components/Answers/Answers';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Button from '../../components/UI/Button/Button';
+import Results from '../../components/Results/Results';
 
 const Quiz = (params) => {
   const BASE_API = 'https://restcountries.eu/rest/v2/';
@@ -11,7 +12,8 @@ const Quiz = (params) => {
   const NUMBER_OF_ANSWERS = 4;
 
   //  TODO: implementar check de score, y set de numero de preguntas/respuestas
-  // const [score, setScore] = useState(0);
+  const [score, setScore] = useState(0);
+  const [finishedQuiz, setfinishedQuiz] = useState(false);
   // const [questionsNumber, setquestionsNumber] = useState(0);
   // const [answersNumber, setanswersNumber] = useState(0);
   const [questions, setQuestions] = useState([]);
@@ -34,8 +36,16 @@ const Quiz = (params) => {
     return answer;
   }, []);
   
+  const sortAnswers = (answers) => {
+    return answers.sort(() => Math.random() - 0.5).map((answer, i) => ({
+      id: String.fromCharCode(65 + i),
+      value: answer.value,
+      isCorrect: null,
+    }));
+  };
+
   const getQuestion = useCallback(
-    async (numberOfAnswers) => {
+    async (numberOfAnswers, mode = 'capital') => {
       const countryData = await getCountries();
       const countryToGuess = getCorrectAnswer(countryData);
       const correctAnswer = countryToGuess.capital;
@@ -45,19 +55,15 @@ const Quiz = (params) => {
   
       while (answers.length < numberOfAnswers) {
         const city =  getRandomCountry(countryData).capital;
-        debugger;
+
         if (!Object.values(answers).find( answer => answer.value === city)) {
           answers.push({
-            value: getRandomCountry(countryData).capital,
+            value: city,
           })
         }
       }
   
-      const sortedAnswerArray = answers.sort(() => Math.random() - 0.5).map((answer, i) => ({
-        id: String.fromCharCode(65 + i),
-        value: answer.value,
-        isCorrect: null,
-      }));
+      const sortedAnswerArray = sortAnswers(answers);
   
       const question = {
         countryToGuess,
@@ -74,22 +80,24 @@ const Quiz = (params) => {
   
   useEffect(() => {
     // reference: https://www.robinwieruch.de/react-hooks-fetch-data
-    const getQuestions = async (numberOfQuestions) => {
-      const questionsArray = [];
-      let idx = 0;
-
-      while (idx < numberOfQuestions) {
-        questionsArray.push(getQuestion(NUMBER_OF_ANSWERS));
-        idx++;
-      }
-
-      Promise.all(questionsArray)
-        .then( questions => {
-          setQuestions(questions);
-        })
-    };
-    getQuestions(NUMBER_OF_QUESTIONS)
-  }, [getQuestion]);
+    if (!finishedQuiz) {
+      const getQuestions = async (numberOfQuestions) => {
+        const questionsArray = [];
+        let idx = 0;
+  
+        while (idx < numberOfQuestions) {
+          questionsArray.push(getQuestion(NUMBER_OF_ANSWERS));
+          idx++;
+        }
+  
+        Promise.all(questionsArray)
+          .then( questions => {
+            setQuestions(questions);
+          })
+      };
+      getQuestions(NUMBER_OF_QUESTIONS);   
+    }
+  }, [finishedQuiz, getQuestion]);
 
   const getRandomCountry = (countries = []) => {
     const max = countries.length;
@@ -115,36 +123,72 @@ const Quiz = (params) => {
 
     console.log(isCorrect);
   };
+
+  const onNextButtonClicked = () => {
+    const idx = currentQuestionIndex;
+    if (idx >= questions.length - 1) {
+      getTotalScore();
+    } else {
+      setcurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const getTotalScore = () => {
+    let totalScore = questions.reduce( (totalScore, question) => totalScore + question.isCorrect, 0);
+    setScore(totalScore);
+    setfinishedQuiz(true);
+  };
+
+  const restartQuiz = () => {
+    setfinishedQuiz(false);
+    setcurrentQuestionIndex(0);
+    setScore(0);
+  }
   
   let quiz = <Spinner/>;
-  if (questions[currentQuestionIndex]) {
+  if (!finishedQuiz && questions[currentQuestionIndex]) {
     let nextButton = null;
     if (questions[currentQuestionIndex].isAnswered) {
-      nextButton = <Button 
-      label="Next" 
-      clicked={() => setcurrentQuestionIndex(currentQuestionIndex + 1)} 
-    />
+      if(currentQuestionIndex >= questions.length - 1) {
+        nextButton = <Button 
+          label="Get Results" 
+          clicked={onNextButtonClicked} 
+        />
+      } else {
+        nextButton = <Button 
+          label="Next" 
+          clicked={onNextButtonClicked} 
+        />
+      }
+
     }
     quiz = (<> 
-      <div className={classes.Question}>What's the capital of {questions[currentQuestionIndex].countryToGuess.name}?</div>
+      <div className={styles.Question}>What's the capital of {questions[currentQuestionIndex].countryToGuess.name}?</div>
       <Answers 
         answers={questions[currentQuestionIndex]}
         onAnswerClicked={checkAnswer}
       /> 
-      <footer className={classes.Footer}>
+      <footer className={styles.Footer}>
         {nextButton}
       </footer> 
     </>);
   
   }
 
+  if (finishedQuiz) {
+    quiz = <Results
+      score={score}
+      retryClicked={restartQuiz}
+    ></Results>
+  }
+
   return(
-    <section className={classes.Wrapper}>
+    <section className={styles.Wrapper}>
       <header>
-        <h2 className={classes.Header}>Country quiz</h2>
-        <div className={classes.Logo}></div>
+        <h2 className={styles.Header}>Country quiz</h2>
+        {!finishedQuiz && <div className={styles.Logo}></div>}
       </header>
-      <div className={classes.Quiz}>
+      <div className={styles.Quiz}>
         {quiz}
       </div>
     </section>

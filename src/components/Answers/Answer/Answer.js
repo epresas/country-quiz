@@ -1,34 +1,39 @@
 import React from 'react';
 
-import classes from './Answer.module.css';
+import styles from './Answer.module.css';
 
 const Answer = (props) => {
-  const classesArray = [classes.AnswerBtn];
+  const stylesArray = [styles.AnswerBtn];
   const isDisabled = props.answered && !props.correct && !props.incorrect;
   let check = null;
 
   if (props.correct) {
-    classesArray.push(classes.Correct);
-    check = <span className={[classes.Check, classes.CheckCorrect].join(' ')}></span>
+    stylesArray.push(styles.Correct);
+    check = <span className={[styles.Check, styles.CheckCorrect].join(' ')}></span>
   }
 
   if (props.incorrect) {
-    classesArray.push(classes.Incorrect);
-    check = <span className={[classes.Check, classes.CheckIncorrect].join(' ')}></span>
+    stylesArray.push(styles.Incorrect);
+    check = <span className={[styles.Check, styles.CheckIncorrect].join(' ')}></span>
   }
 
   if (isDisabled) {
-    classesArray.push(classes.Disabled)
+    stylesArray.push(styles.Disabled)
     
   }
 
 
 
   return (
-    <li className={classes.Answer} id={props.id} >
-      <button type="button" className={classesArray.join(' ')}  onClick={props.clicked} disabled={isDisabled}>
-        <span className={classes.Counter}>{props.id}</span>
-        <p className={classes.Label}>{props.label}</p>
+    <li className={styles.Answer} id={props.id} disabled={isDisabled}>
+      <button 
+        type="button" 
+        className={stylesArray.join(' ')}  
+        onClick={props.clicked} 
+        disabled={isDisabled} 
+        tabIndex={(isDisabled || props.correct || props.incorrect) ? -1 : 0}>
+        <span className={styles.Counter}>{props.id}</span>
+        <p className={styles.Label}>{props.label}</p>
         {check}
       </button>
     </li>

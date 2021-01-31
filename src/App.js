@@ -1,11 +1,13 @@
 import './App.css';
 
 import Quiz from './containers/Quiz/Quiz';
+import Authentication from './containers/Authentication/Authentication';
 
 function App() {
   return (
     <div className="App">
-      <Quiz/>
+      <Authentication/>
+      {/* <Quiz/> */}
     </div>
   );
 }

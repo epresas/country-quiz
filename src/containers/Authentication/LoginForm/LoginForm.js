@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react'
 
-import styles from './LoginForm.module.css';
+import styles from '../Form.module.css';
 import * as utilities from '../../../shared/utilities';
 
 const LoginForm = (props) => {
   const [controls, setControls] = useState({
     username: {
       value: '',
+      type: 'text',
       isValid: false,
       isTouched: false,
       errorMsg: null,
@@ -18,6 +19,7 @@ const LoginForm = (props) => {
     },
     password: {
       value: '',
+      type:'password',
       isValid: false,
       isTouched: false,
       errorMsg: null,
@@ -70,6 +72,19 @@ const LoginForm = (props) => {
 
     setControls(updatedControls);
   }
+
+  const togglePassword = () => {
+    const updatedControls = {
+      ...controls,
+      password: {
+        ...controls.password,
+        type: controls.password.type === 'text' ? 'password' : 'text',
+      }
+    };
+
+    setControls(updatedControls);
+  }
+
   const onLoginHandler = () => {
 
   };
@@ -94,13 +109,14 @@ const LoginForm = (props) => {
           <div className={styles.FormGroup}>
             <input 
               className={getInputClasses('password').join(' ')} 
-              type="password" 
+              type={controls.password.type} 
               name="password"
               onChange={(ev) => {inputChangeHandler(ev)}}
               onBlur={(ev) => {inputChangeHandler(ev)}}
               value={controls.password.value}
             />
             <label className={styles.FormLabel} htmlFor="password">Password</label>
+            <i className={controls.password.type === 'text' ? styles.HidePassword : styles.ShowPassword} onClick={togglePassword}></i>
             {!controls.password.isValid && <p className={styles.ErrorMsg}>{controls.password.errorMsg}</p>}
           </div>
         </div>

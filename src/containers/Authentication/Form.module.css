@@ -1,9 +1,28 @@
 .FormGroup {
   display: flex;
+  flex-direction: column;
   margin-bottom: 25px;
   padding: 0 50px;
   position: relative;
 }
+.PasswordIcon {
+  height: 36px;
+  position: absolute;
+  right: 52px;
+  top: 2px;
+  width: 36px;
+}
+
+.ShowPassword {
+  composes: PasswordIcon;
+  background: url('../../assets/img/icon-eye-open.svg') center no-repeat;
+}
+
+.HidePassword {
+  composes: PasswordIcon;
+  background: url('../../assets/img/icon-eye-closed.svg') center no-repeat;
+}
+
 .FormInput {
   border: 2px solid var(--color-blue-light-secondary);
   border-radius: 10px;
@@ -24,17 +43,26 @@
   outline:none;
 }
 
-.FormInput:focus + .FormLabel {
-  transform: translate(10px, -200%);
+.FormInput:focus + .FormLabel,
+.FormInput.IsFilled + .FormLabel {
+  transform: translateY(-30px);
 }
+
 .FormLabel {
   font-size: 12px;
+  padding-left: 10px;
   pointer-events: none;
   position: absolute;
-  top: 50%;
-  transform: translate(10px, -50%);
+  top: 12px;
   transition: all .12s linear;
 }
+
+.ErrorMsg {
+  color: var(--color-red-error);
+  font-size: 10px;
+  padding-left: 10px;
+}
+
 .Footer {
   margin-top: 20px;
   display: flex;

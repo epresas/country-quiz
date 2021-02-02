@@ -5,7 +5,7 @@ import * as utilities from '../../../shared/utilities';
 
 const LoginForm = (props) => {
   const [controls, setControls] = useState({
-    username: {
+    email: {
       value: '',
       type: 'text',
       isValid: false,
@@ -13,8 +13,7 @@ const LoginForm = (props) => {
       errorMsg: null,
       validation: {
         required: true,
-        minLength: 2,
-        maxLength: 30,
+        pattern: 'email',
       },
     },
     password: {
@@ -83,10 +82,27 @@ const LoginForm = (props) => {
     };
 
     setControls(updatedControls);
+  };
+
+  const validateForm = () => {
+
+    for (const control in controls) {
+      if (!controls[control].isValid) {
+        return false;
+      }
+    };
+
+    return true;
   }
 
   const onLoginHandler = () => {
-
+    if (validateForm()) {
+      const loginData = {
+        email: controls.email.value,
+        password: controls.password.value,
+      }
+      props.onLogin(loginData);
+    }
   };
 
   return (
@@ -95,16 +111,16 @@ const LoginForm = (props) => {
         <div className={styles.Form} >
           <div className={styles.FormGroup}>
             <input 
-              className={getInputClasses('username').join(' ')} 
+              className={getInputClasses('email').join(' ')} 
               type="text" 
-              name="username" 
-              id="username"
+              name="email" 
+              id="email"
               onChange={(ev) => {inputChangeHandler(ev)}}
               onBlur={(ev) => {inputChangeHandler(ev)}}
-              value={controls.username.value}
+              value={controls.email.value}
             />
-            <label className={styles.FormLabel} htmlFor="username">Username</label>
-            {!controls.username.isValid && <p className={styles.ErrorMsg}>{controls.username.errorMsg}</p>}
+            <label className={styles.FormLabel} htmlFor="email">Email</label>
+            {!controls.email.isValid && <p className={styles.ErrorMsg}>{controls.email.errorMsg}</p>}
           </div>
           <div className={styles.FormGroup}>
             <input 

@@ -28,6 +28,7 @@ const RegisterForm = (props) => {
     },
     password: {
       value: '',
+      type: 'password',
       isValid: false,
       isTouched: false,
       errorMsg: null,
@@ -94,8 +95,30 @@ const RegisterForm = (props) => {
     setControls(updatedControls);
   }
 
-  const onRegisterHandler = () => {};
+  const validateForm = () => {
+
+    for (const control in controls) {
+      if (!controls[control].isValid) {
+        return false;
+      }
+    };
+
+    return true;
+  }
+
+  const onRegisterHandler = () => {
+    if (validateForm()) {
+      const registerData = {
+        email: controls.email.value,
+        password: controls.password.value,
+        username: controls.username.value
+      }
+      props.onRegister(registerData);
+    }
+  };
+
   
+
   return (
     <div className={styles.Container}>
       <div className={styles.Content}>
@@ -128,7 +151,7 @@ const RegisterForm = (props) => {
           </div>
           <div className={styles.FormGroup}>
             <input 
-              className={getInputClasses('email').join(' ')} 
+              className={getInputClasses('password').join(' ')} 
               type={controls.password.type} 
               name="password"
               id="password"

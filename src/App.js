@@ -11,9 +11,7 @@ function App() {
     <Route path="/quiz" exact component={Quiz}></Route>
     <Redirect to="/quiz"/>
   </Switch>;
-
-
-<Route path="/" exact component={Quiz}></Route>
+  
   return (
     <AuthProvider>
         <div className="App">

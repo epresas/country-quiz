@@ -10,12 +10,8 @@ const Quiz = (params) => {
   const BASE_API = 'https://restcountries.eu/rest/v2/';
   const NUMBER_OF_QUESTIONS = 4;
   const NUMBER_OF_ANSWERS = 4;
-
-  //  TODO: implementar check de score, y set de numero de preguntas/respuestas
   const [score, setScore] = useState(0);
   const [finishedQuiz, setfinishedQuiz] = useState(false);
-  // const [questionsNumber, setquestionsNumber] = useState(0);
-  // const [answersNumber, setanswersNumber] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setcurrentQuestionIndex] = useState(0);
 
@@ -44,30 +40,57 @@ const Quiz = (params) => {
     }));
   };
 
+  const getCapitalAnswers = useCallback((countryToGuess, countryData) => {
+    const answers = [{
+      value: countryToGuess.capital,
+    }];
+
+    while (answers.length < NUMBER_OF_ANSWERS) {
+      const city =  getRandomCountry(countryData).capital;
+
+      if (!Object.values(answers).find( answer => answer.value === city)) {
+        answers.push({
+          value: city,
+        })
+      }
+    }
+
+    return answers;
+  }, []);
+
+  const getFlagAnswers = useCallback((countryToGuess, countryData) => {
+    debugger;
+    const answers = [{
+      value: countryToGuess.name,
+    }];
+
+    while (answers.length < NUMBER_OF_ANSWERS) {
+      const country = getRandomCountry(countryData).name;
+
+      if (!Object.values(answers).find( answer => answer.value === country)) {
+        answers.push({
+          value: country,
+        })
+      }
+    }
+
+    return answers;
+  }, []);
+
   const getQuestion = useCallback(
-    async (numberOfAnswers, mode = 'capital') => {
+    async () => {
+      debugger;
       const countryData = await getCountries();
       const countryToGuess = getCorrectAnswer(countryData);
-      const correctAnswer = countryToGuess.capital;
-      const answers = [{
-        value: correctAnswer,
-      }];
-  
-      while (answers.length < numberOfAnswers) {
-        const city =  getRandomCountry(countryData).capital;
-
-        if (!Object.values(answers).find( answer => answer.value === city)) {
-          answers.push({
-            value: city,
-          })
-        }
-      }
-  
-      const sortedAnswerArray = sortAnswers(answers);
-  
+      const mode = Math.random() < 0.5 ? 'capital' : 'flag';
+      const answers = mode === 'capital' 
+        ? getCapitalAnswers(countryToGuess, countryData)
+        : getFlagAnswers(countryToGuess, countryData);
+      const sortedAnswerArray = sortAnswers(answers); 
       const question = {
         countryToGuess,
         answers: sortedAnswerArray,
+        type: mode,
         isAnswered: false,
         correct: null,
         incorrect: null,
@@ -75,7 +98,7 @@ const Quiz = (params) => {
   
       return question;
     },
-    [getCorrectAnswer],
+    [getCapitalAnswers, getCorrectAnswer, getFlagAnswers],
   )
   
   useEffect(() => {
@@ -86,7 +109,7 @@ const Quiz = (params) => {
         let idx = 0;
   
         while (idx < numberOfQuestions) {
-          questionsArray.push(getQuestion(NUMBER_OF_ANSWERS));
+          questionsArray.push(getQuestion());
           idx++;
         }
   
@@ -109,19 +132,30 @@ const Quiz = (params) => {
     const idx = currentQuestionIndex;
     const updatedQuestions = [...questions];
     const updatedQuestion = updatedQuestions[idx];
-    const isCorrect = selectedAnswer.value === questions[idx].countryToGuess.capital;
+    const mode = questions[idx].type
+    let isCorrect = false;
+
+    if (mode === 'capital') {
+      isCorrect = selectedAnswer.value === questions[idx].countryToGuess.capital;
+    } else {
+      isCorrect = selectedAnswer.value === questions[idx].countryToGuess.name;  
+    }
 
     updatedQuestion.isAnswered = true;
     updatedQuestion.isCorrect = isCorrect;
     updatedQuestion.answers.forEach( answer => {
-      answer.correct = answer.value === questions[idx].countryToGuess.capital;
+      if (mode === 'capital') {
+        answer.correct = answer.value === questions[idx].countryToGuess.capital;
+      } else {
+        answer.correct = answer.value === questions[idx].countryToGuess.name;
+      }
+
       answer.incorrect = answer.id === selectedAnswer.id && !answer.correct;
     });
     updatedQuestions[idx] = updatedQuestion;
 
     setQuestions(updatedQuestions);
 
-    console.log(isCorrect);
   };
 
   const onNextButtonClicked = () => {
@@ -162,8 +196,17 @@ const Quiz = (params) => {
       }
 
     }
+
+    let question = <div className={styles.Question}>What's the capital of {questions[currentQuestionIndex].countryToGuess.name}?</div>;
+
+    if (questions[currentQuestionIndex].type === 'flag') {
+      question = <div className={styles.QuestionWrapper}>
+        <img className={styles.Flag} alt='' src={questions[currentQuestionIndex].countryToGuess.flag} />
+        <div className={styles.Question}>Which country does this flag belong to?</div>
+      </div>
+    }
     quiz = (<> 
-      <div className={styles.Question}>What's the capital of {questions[currentQuestionIndex].countryToGuess.name}?</div>
+      {question}
       <Answers 
         answers={questions[currentQuestionIndex]}
         onAnswerClicked={checkAnswer}

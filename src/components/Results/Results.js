@@ -3,7 +3,7 @@ import React from 'react'
 import styles from './Results.module.css';
 import winnersImg from '../../assets/img/undraw_winners.svg'
 
-const Results = ({ score, retryClicked, continueClicked }) => {
+const Results = ({ score, retryClicked }) => {
   
   return (
     <section className={styles.Results}>
@@ -20,11 +20,6 @@ const Results = ({ score, retryClicked, continueClicked }) => {
           className={styles.RetryBtn}
           onClick={retryClicked}
         >Try again</button>
-        <button 
-          type="button" 
-          className={styles.ContinueBtn}
-          onClick={continueClicked}
-        >Continue</button>
       </footer>
     </section>
   )

@@ -39,9 +39,9 @@
 }
 
 .Footer {
+  align-items: center;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
 }
 
@@ -52,7 +52,7 @@
   height: 62px;
   max-height: 62px;
   transition: all .13s linear;
-  flex: 1 0 auto;
+  width: 209px;
 }
 
 .Button:not(:last-child) {

@@ -1,0 +1,31 @@
+.Footer {
+  cursor: url('../../assets/img/hand-pointer-svgrepo-com.svg'), auto;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.Info,
+.Link {
+  color: var(--color-grey-light);
+  font-size: 14px;
+  line-height: 36px;
+  padding: 0 5px;
+}
+
+.Link {
+  position: relative;
+  text-decoration: none;
+  transition: all .12s linear;
+}
+
+.Link::after {
+  border: 1px solid var(--color-white);
+  left: 0;
+  position: absolute;
+}
+
+.Link:hover {
+  text-decoration: underline;
+}

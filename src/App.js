@@ -1,24 +1,14 @@
-import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
-import { AuthProvider } from './Firebase/auth-context';
-
 import './App.css';
 import Quiz from './containers/Quiz/Quiz';
-import Authentication from './containers/Authentication/Authentication';
+import Footer from './components/Footer/Footer';
 
 function App() {
-  const routes = <Switch>
-    <Route path="/auth" exact component={Authentication}></Route>
-    <Route path="/quiz" exact component={Quiz}></Route>
-    <Redirect to="/quiz"/>
-  </Switch>;
-  
   return (
-    <AuthProvider>
-        <div className="App">
-          {routes}
-        </div>
-    </AuthProvider>
+    <div className="App">
+      <Quiz />
+      <Footer/>
+    </div>
   );
 }
 
-export default withRouter(App);
+export default App;

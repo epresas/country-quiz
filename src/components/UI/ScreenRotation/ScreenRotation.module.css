@@ -1,0 +1,33 @@
+.Backdrop {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+.Content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Title {
+  color: var(--color-grey-light);
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+.ImgWrapper {
+  width: 120px;
+}
+
+.Img {
+  width: 100%;
+}

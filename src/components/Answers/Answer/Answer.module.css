@@ -19,7 +19,7 @@
   border-radius: 12px;
   color: var(--color-blue-light-secondary);
   display: flex;
-  height: 100%;
+  height: auto;
   transition: color .15s ease-in-out;
   width: 100%;
 }
@@ -96,3 +96,5 @@
   
   }
 }
+
+/* flex: 1 0 50%; */

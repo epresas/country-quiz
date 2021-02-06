@@ -59,7 +59,6 @@ const Quiz = (params) => {
   }, []);
 
   const getFlagAnswers = useCallback((countryToGuess, countryData) => {
-    debugger;
     const answers = [{
       value: countryToGuess.name,
     }];
@@ -79,7 +78,6 @@ const Quiz = (params) => {
 
   const getQuestion = useCallback(
     async () => {
-      debugger;
       const countryData = await getCountries();
       const countryToGuess = getCorrectAnswer(countryData);
       const mode = Math.random() < 0.5 ? 'capital' : 'flag';
@@ -196,7 +194,7 @@ const Quiz = (params) => {
       }
 
     }
-
+    
     let question = <div className={styles.Question}>What's the capital of {questions[currentQuestionIndex].countryToGuess.name}?</div>;
 
     if (questions[currentQuestionIndex].type === 'flag') {
@@ -205,7 +203,7 @@ const Quiz = (params) => {
         <div className={styles.Question}>Which country does this flag belong to?</div>
       </div>
     }
-    quiz = (<> 
+    quiz = (<div> 
       {question}
       <Answers 
         answers={questions[currentQuestionIndex]}
@@ -214,7 +212,7 @@ const Quiz = (params) => {
       <footer className={styles.Footer}>
         {nextButton}
       </footer> 
-    </>);
+    </div>);
   
   }
 

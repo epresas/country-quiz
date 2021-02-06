@@ -141,3 +141,11 @@ header {
     margin-left: 10px;
   }
 }
+
+@media only screen and (min-device-width: 480px) and (max-device-width: 640px) and (orientation: landscape) {
+  .Quiz {
+    max-width: auto;
+    width: 100vw;
+  }
+
+}

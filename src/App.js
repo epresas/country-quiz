@@ -11,7 +11,7 @@ function App() {
 
   useEffect(() => {
 
-    if(window.matchMedia('(orientation:landscape)').matches){
+    if(window.innerWidth <= 760 && window.matchMedia('(orientation:landscape)').matches){
       setOrientationDeg(90)
     }
     handleOrientationChange();
